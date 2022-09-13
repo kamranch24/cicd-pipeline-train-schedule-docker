@@ -38,11 +38,6 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script{
-            when {
-                branch 'master'
-            }
-            steps {
                 input 'Deploy to Production?'
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'web-server-cred', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
