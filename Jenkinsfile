@@ -20,12 +20,25 @@ pipeline {
             }
                   
         }
-       stage('Push Docker Image'){
-            when{
+         stage('Push Docker Image') {
+            when {
                 branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DockerCred') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
                 }
-            steps{
-                script{ stage('DeployToProduction') {
+            }
+        }
+        stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script{
             when {
                 branch 'master'
             }
@@ -48,9 +61,11 @@ pipeline {
         }
                     
                 }
-                    
-            }
         }
+    }
+                    
+}
+        
          
        
-    }
+    
