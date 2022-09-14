@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent{ 
+    docker{image 'node:carbon' }
+    }
     stages {
         stage('checkout'){
             steps{
@@ -14,6 +16,9 @@ pipeline {
             }
         }
         stage('Build Docker Image'){
+            when{
+                 branch 'main'
+                }
             
             steps{
                 script{
@@ -24,6 +29,9 @@ pipeline {
                   
         }
          stage('Push Docker Image') {
+              when{
+                 branch 'main'
+                }
             
             steps {
                 script {
@@ -35,6 +43,9 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
+             when{
+                 branch 'main'
+                }
            
             steps {
                 input 'Deploy to Production?'
