@@ -1,5 +1,9 @@
 pipeline {
-    agent none
+         agent {
+        docker {
+          image 'node:carbon'
+        }
+      }
     stages {
         stage('checkout'){
             steps{
@@ -7,11 +11,7 @@ pipeline {
             }
         }
         stage('Build') {
-            agent {
-        docker {
-          image 'node:carbon'
-        }
-      }
+       
             steps {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
