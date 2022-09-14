@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('checkout'){
+            steps{
+                git branch: 'master', url: 'https://github.com/kamranch24/cicd-pipeline-train-schedule-docker.git'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Running build automation'
